@@ -1,0 +1,93 @@
+index.html<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Перцептрон — интерактивті тапсырмалар</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#eef6ff;color:#17324d}
+.wrap{max-width:1050px;margin:auto;padding:14px}
+header{background:linear-gradient(135deg,#2563eb,#06b6d4);color:#fff;border-radius:24px;padding:24px;text-align:center}
+h1{margin:0 0 8px;font-size:clamp(25px,5vw,42px)}
+.sub{font-size:18px}
+.card{background:#fff;border-radius:22px;padding:20px;margin-top:16px;box-shadow:0 5px 18px #17324d18}
+.inf{display:grid;grid-template-columns:1fr 40px 1fr 40px 1fr;gap:8px;align-items:center;text-align:center}
+.box{padding:16px 8px;border-radius:16px;background:#e8f1ff;font-weight:bold;min-height:75px;display:flex;align-items:center;justify-content:center}
+.arrow{font-size:25px}
+.formula{text-align:center;background:#fff7d6;padding:16px;border-radius:16px;margin:15px 0;font-size:25px;font-weight:bold}
+.example{background:#f0fdf4;border-radius:16px;padding:15px;font-size:18px}
+.task{display:none}.task.active{display:block}
+.progress{text-align:center;font-weight:bold;margin-bottom:10px}
+.q{font-size:clamp(20px,3.5vw,28px);font-weight:bold;margin-bottom:15px}
+.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+button{border:0;border-radius:17px;padding:18px;font-size:clamp(17px,3vw,22px);font-weight:bold;background:#dbeafe;color:#17324d;cursor:pointer;touch-action:manipulation}
+button:disabled{opacity:.75}.next{background:#2563eb;color:#fff;width:100%;margin-top:15px}
+.feedback{text-align:center;min-height:30px;font-size:19px;font-weight:bold;margin-top:13px}
+.score{text-align:center;font-size:22px;font-weight:bold;margin-top:10px}
+@media(max-width:700px){
+.inf{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}
+.answers{grid-template-columns:1fr}.card{padding:15px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<h1>🧠 Перцептрон және оның қызметі</h1>
+<div class="sub">10-сынып • 10.1.2.3 • Интерактивті тапсырмалар</div>
+</header>
+
+<div class="card">
+<h2>📌 Инфографика</h2>
+<div class="inf">
+<div class="box">📥 Кірістер<br>x₁, x₂</div><div class="arrow">➡️</div>
+<div class="box">⚖️ Салмақтар<br>w₁, w₂</div><div class="arrow">➡️</div>
+<div class="box">➕ Қосынды<br>S</div>
+</div>
+<div class="inf" style="margin-top:10px">
+<div class="box">🧮 S=x₁w₁+x₂w₂</div><div class="arrow">➡️</div>
+<div class="box">⚡ Белсендіру<br>функциясы</div><div class="arrow">➡️</div>
+<div class="box">📤 Шығыс<br>y=0 немесе 1</div>
+</div>
+<div class="formula">Егер S ≥ 5 → y = 1 &nbsp; | &nbsp; S &lt; 5 → y = 0</div>
+<div class="example"><b>Мысал:</b> x₁=1,w₁=4,x₂=1,w₂=3 → S=1×4+1×3=7 → 7≥5 → <b>y=1</b></div>
+</div>
+
+<div class="card">
+<div class="progress" id="p">1 / 10</div>
+<div id="tasks">
+<section class="task active" data-a="1"><div class="q">1️⃣ Перцептронның кірістері нені көрсетеді?</div><div class="answers"><button onclick="pick(this,0)">Белсендіру функциясын</button><button onclick="pick(this,1)">Мәліметтерді x₁, x₂...</button><button onclick="pick(this,2)">Тек нәтижені</button><button onclick="pick(this,3)">Салмақтарды</button></div></section><section class="task" data-a="0"><div class="q">2️⃣ Дұрыс реттілікті таңда.</div><div class="answers"><button onclick="pick(this,0)">Кіріс → салмақ → қосынды → белсендіру → шығыс</button><button onclick="pick(this,1)">Шығыс → кіріс → салмақ → қосынды</button><button onclick="pick(this,2)">Салмақ → шығыс → кіріс → белсендіру</button><button onclick="pick(this,3)">Қосынды → кіріс → шығыс → салмақ</button></div></section><section class="task" data-a="1"><div class="q">3️⃣ Қайсысы салмақты (weight) білдіреді?</div><div class="answers"><button onclick="pick(this,0)">x₁</button><button onclick="pick(this,1)">w₁</button><button onclick="pick(this,2)">S</button><button onclick="pick(this,3)">y</button></div></section><section class="task" data-a="0"><div class="q">4️⃣ x₁=1, w₁=2, x₂=1, w₂=3. S неге тең?</div><div class="answers"><button onclick="pick(this,0)">5</button><button onclick="pick(this,1)">4</button><button onclick="pick(this,2)">6</button><button onclick="pick(this,3)">7</button></div></section><section class="task" data-a="3"><div class="q">5️⃣ x₁=1, w₁=4, x₂=1, w₂=3. S неге тең?</div><div class="answers"><button onclick="pick(this,0)">5</button><button onclick="pick(this,1)">6</button><button onclick="pick(this,2)">8</button><button onclick="pick(this,3)">7</button></div></section><section class="task" data-a="0"><div class="q">6️⃣ S=7. Шекті мән θ=5. Шығыс қандай?</div><div class="answers"><button onclick="pick(this,0)">y=1</button><button onclick="pick(this,1)">y=0</button><button onclick="pick(this,2)">y=5</button><button onclick="pick(this,3)">y=7</button></div></section><section class="task" data-a="1"><div class="q">7️⃣ S=3, ал θ=5. Шығыс қандай?</div><div class="answers"><button onclick="pick(this,0)">y=1</button><button onclick="pick(this,1)">y=0</button><button onclick="pick(this,2)">y=3</button><button onclick="pick(this,3)">y=5</button></div></section><section class="task" data-a="2"><div class="q">8️⃣ Белсендіру функциясының негізгі қызметі қандай?</div><div class="answers"><button onclick="pick(this,0)">Кірісті өшіру</button><button onclick="pick(this,1)">Салмақты өзгерту</button><button onclick="pick(this,2)">Қосындыға қарап шығысты анықтау</button><button onclick="pick(this,3)">Тек x₁-ді сақтау</button></div></section><section class="task" data-a="0"><div class="q">9️⃣ Дұрыс па? «Салмақ кірістің маңыздылығын ескеруге көмектеседі».</div><div class="answers"><button onclick="pick(this,0)">Дұрыс ✅</button><button onclick="pick(this,1)">Бұрыс ❌</button></div></section><section class="task" data-a="0"><div class="q">🔟 Толық есеп: x₁=1,w₁=2,x₂=1,w₂=4. θ=5. y қандай?</div><div class="answers"><button onclick="pick(this,0)">y=1</button><button onclick="pick(this,1)">y=0</button><button onclick="pick(this,2)">y=5</button><button onclick="pick(this,3)">y=6</button></div></section>
+</div>
+<div class="feedback" id="f"></div>
+<button class="next" id="next" style="display:none" onclick="go()">Келесі тапсырма ➡️</button>
+<div class="score" id="s">Ұпай: 0 / 10</div>
+</div>
+</div>
+<script>
+let i=0,score=0,done=false;
+const t=[...document.querySelectorAll(".task")],p=document.getElementById("p"),
+f=document.getElementById("f"),nx=document.getElementById("next"),sc=document.getElementById("s");
+function pick(b,k){
+ if(done)return;
+ done=true;
+ let ok=k==+b.closest(".task").dataset.a;
+ if(ok){score++;f.textContent="✅ Дұрыс!";}
+ else{f.textContent="💡 Қайта ойлан. Жоғарыдағы инфографикаға қара.";}
+ b.closest(".task").querySelectorAll("button").forEach(x=>x.disabled=true);
+ sc.textContent="Ұпай: "+score+" / 10";
+ nx.style.display="block";
+}
+function go(){
+ if(i<9){
+  t[i].classList.remove("active");i++;t[i].classList.add("active");
+  p.textContent=(i+1)+" / 10";f.textContent="";nx.style.display="none";done=false;
+ }else{
+  f.textContent="🎉 Аяқталды! Нәтиже: "+score+" / 10";
+  nx.textContent="🔄 Қайта бастау";
+  nx.onclick=()=>location.reload();
+ }
+}
+</script>
+</body>
+</html>
